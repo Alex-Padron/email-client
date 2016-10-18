@@ -49,9 +49,14 @@ var User_data = function() {
     users[username].personal_info.sync();
   }
 
-  that.add_class = function(username, class_name) {
-    users[username].classes.add_class(class_name);
+  that.class_list = function(username) {
+    return users[username].classes.class_list();
+  }
+
+  that.add_class = function(username, class_name, students) {
+    var result = users[username].classes.add_class(class_name, students);
     users[username].classes.sync();
+    return result;
   }
 
   that.remove_class = function(username, class_name) {

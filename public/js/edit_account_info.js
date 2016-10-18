@@ -47,10 +47,7 @@ $(function() {
 	  "email_password": new_password,
 	}),
 	success: load_email,
-	error: function(err) {
-	  console.log(err);
-	  load_email()
-	},
+	error: load_email(),
 	timeout: 2000,
 	contentType: "application/json",
       });

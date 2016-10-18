@@ -5,7 +5,7 @@ var Personal_info = function(password, email_address, email_password) {
 
   that.update_email = function(new_address, new_password) {
     email_address = new_address;
-    password = new_password;
+    email_password = new_password;
   }
 
   that.get_password = function() {

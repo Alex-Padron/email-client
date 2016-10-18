@@ -22,8 +22,18 @@ var Classes = function() {
       delete students[class_name][student_name];
   }
 
-  that.add_class = function(class_name) {
+  that.add_class = function(class_name, new_students) {
+    if (students[class_name]) return false;
     students[class_name] = [];
+    for (var i = 0; i < new_students.length; i++) {
+      var student = new_students[i];
+      if (!student.name || !student.email) {
+	delete students[class_name];
+	return false;
+      }
+      students[class_name].push(student);
+    }
+    return true;
   }
 
   that.remove_class = function(name) {
@@ -31,12 +41,16 @@ var Classes = function() {
   }
 
   that.extract = function(class_name, student_names) {
-    email_addrs = []
+    var email_addrs = []
     for (student_name in student_names) {
       if (students[class_name][student_name]) {
 	email_addrs.push(students[class_name][student_name]);
       }
     }
+  }
+
+  that.class_list = function() {
+    return Object.keys(students);
   }
 
   Object.freeze(that);

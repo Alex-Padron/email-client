@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Fritter :: Home</title>
+    <title>EC :: Edit Classes</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript">
@@ -15,15 +15,28 @@
         });
       });
     </script>
+    <script src="./js/edit_classes.js"></script>
+    <script src="./js/create_class_widget.js"></script>
+    <script src="./js/edit_class_widget.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
   <body>
     <div class="container">
       <div id="header"></div>
       <div class="container" style="margin-bottom: 10px">
-	<input id="search_bar" type="text" placeholder="Search"></input>
+	<button id="new_class" type="button" style="margin-bottom: 20px"
+		class="btn btn-primary">New Class</button>
+	<div id="edit_class" style="margin-bottom: 20px"></div>
+	<div class="dropdown">
+	  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+	    Select a Class
+	    <span class="caret"></span>
+	  </button>
+	  <ul id="dropdown" class="dropdown-menu">
+	    <li><a>Class3</a></li>
+	  </ul>
+	</div>
       </div>
-      <div id="posts"></div>
     </div>
   </body>
 </html>
