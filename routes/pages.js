@@ -31,7 +31,7 @@ var add_pages = function(app, user_data) {
     res.end();
   });
 
-  app.post("/classes/new_class", function(req, res) {
+  app.post("/classes", function(req, res) {
     var class_name = req.body.class_name;
     var students = req.body.students;
     var username = req.session.username;
@@ -48,6 +48,14 @@ var add_pages = function(app, user_data) {
     console.log("UPDATE CLASS", class_name, "USER", username);
     var success = user_data.update_class(username, class_name, students);
     res.json({'success': success});
+    res.end();
+  });
+
+  app.delete("/classes/:class_name", function(req, res) {
+    var username = req.session.username;
+    var class_name = req.params.class_name;
+    console.log("DELETE CLASS", class_name, "USER", username);
+    user_data.remove_class(username, class_name);
     res.end();
   });
 

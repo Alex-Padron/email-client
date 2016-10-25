@@ -1,7 +1,6 @@
 var class_display_widget = function(dom_container,
 				    class_name,
 				    students,
-				    new_students_callback,
 				    delete_callback) {
   dom_container.empty();
 
@@ -38,18 +37,40 @@ var class_display_widget = function(dom_container,
   info_text.appendTo(dom_container);
   download_container.appendTo(dom_container);
 
-  var submit_to_server = function() {
+  var submit_delete_to_server = function() {
+    var success = function() {
+      dom_container.empty();
+      delete_callback();
+    }
+    var error = function() {
+      info_text.text("unable to contact server");
+    }
+    $.ajax({
+      url: "/classes/" + class_name,
+      type: "DELETE",
+      success: success,
+      error: error,
+      timeout: 2000
+    });
+  }
+
+  var submit_update_to_server = function() {
     if (parsed_students.length == 0) {
-      $("#edit_class_info_text").text("no new students uploaded");
+      info_text.text("no new students uploaded");
       return;
     }
 
-    var success = function() {
-      console.log("updated class users");
+    var success = function(result) {
+      if (result.success) {
+	dom_container.empty();
+      } else {
+	info_text.text("unable to update class");
+      }
     }
 
     var error = function(err) {
       console.log(err);
+      info_text.text("unable to contact server");
     }
 
     $.ajax({
@@ -73,7 +94,7 @@ var class_display_widget = function(dom_container,
 
   var submit_div = $("<div class='btn-group'></div>");
   var submit_button = $("<button class='btn btn-default'>Submit</button>");
-  submit_button.click(submit_to_server);
+  submit_button.click(submit_update_to_server);
   var cancel_button = $("<button class='btn btn-default'>Cancel</button>");
   cancel_button.click(cancel);
   submit_button.appendTo(submit_div);
@@ -82,7 +103,7 @@ var class_display_widget = function(dom_container,
 
   var delete_button = $("<button class='btn btn-danger'>Delete</button>");
   var delete_button_div = $("<div></div>");
-  delete_button.click(delete_callback);
+  delete_button.click(submit_delete_to_server);
   delete_button.appendTo(delete_button_div);
   delete_button_div.appendTo(dom_container);
 };

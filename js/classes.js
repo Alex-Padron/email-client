@@ -34,12 +34,10 @@ var Classes = function() {
       }
       students[class_name].push(student);
     }
-    console.log("students after update", students);
     return true;
   }
 
   that.update_class = function(class_name, new_students) {
-    console.log("about to update class with students", students);
     if (!students[class_name]) return false;
     if (new_students.length == 0) return false;
     var prior = students[class_name];
@@ -73,8 +71,6 @@ var Classes = function() {
   }
 
   that.students = function(class_name) {
-    console.log("querying students for class", class_name);
-    console.log("students after update", students);
     if (!students[class_name]) return [];
     return students[class_name].slice();
   }

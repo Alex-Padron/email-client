@@ -5,10 +5,13 @@ $(document).ready(function () {
 
   var load_class_display = function(class_name) {
     var success = function(students) {
-      class_display_widget($("#class_widget_display"), class_name, students);
+      class_display_widget($("#class_widget_display"),
+			   class_name,
+			   students,
+			   load_class_dropdown);
     }
     var error = function(err) {
-      console.log("unable to contact server", err);
+      console.log(err);
     }
     $.ajax({
       url: "/classes/single/" + class_name,
@@ -27,7 +30,7 @@ $(document).ready(function () {
 				    load_class_display);
     }
     var error = function(err) {
-      console.log("unable to contact server", err);
+      console.log(err);
     }
     $.ajax({
       url: "/classes/class_list",

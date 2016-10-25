@@ -17,7 +17,6 @@ var create_class_widget = function(dom_container, success_hook, cancel_hook) {
       info_text.text("Class name is empty");
       return;
     }
-    console.log("submitting new class request");
     var success = function(data) {
       if (data.success) {
 	dom_container.empty();
@@ -31,7 +30,7 @@ name already exists");
       info_text.text("Error contacting server");
     }
     $.ajax({
-      url: "/classes/new_class",
+      url: "/classes",
       type: "POST",
       dataType: "json",
       data: JSON.stringify({
