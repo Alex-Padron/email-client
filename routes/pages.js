@@ -41,8 +41,25 @@ var add_pages = function(app, user_data) {
     res.end();
   });
 
+  app.put("/classes", function(req, res) {
+    var username   = req.session.username;
+    var class_name = req.body.class_name;
+    var students   = req.body.students;
+    console.log("UPDATE CLASS", class_name, "USER", username);
+    var success = user_data.update_class(username, class_name, students);
+    res.json({'success': success});
+    res.end();
+  });
+
   app.get("/classes/class_list", function(req, res) {
     res.json(user_data.class_list(req.session.username));
+    res.end();
+  });
+
+  // return the students in a given class
+  app.get("/classes/single/:class_name", function(req, res) {
+    var username = req.session.username;
+    res.json(user_data.students(username, req.params.class_name));
     res.end();
   });
 }

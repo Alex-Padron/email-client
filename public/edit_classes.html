@@ -15,9 +15,11 @@
         });
       });
     </script>
+    <script src="./js/file-parser.js"></script>
     <script src="./js/edit_classes.js"></script>
     <script src="./js/create_class_widget.js"></script>
     <script src="./js/edit_class_widget.js"></script>
+    <script src="./js/class_dropdown_widget.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
   <body>
@@ -27,15 +29,15 @@
 	<button id="new_class" type="button" style="margin-bottom: 20px"
 		class="btn btn-primary">New Class</button>
 	<div id="edit_class" style="margin-bottom: 20px"></div>
-	<div class="dropdown">
+	<div id="dropdown_container" class="dropdown" style="margin-bottom: 20px">
 	  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
 	    Select a Class
 	    <span class="caret"></span>
 	  </button>
-	  <ul id="dropdown" class="dropdown-menu">
-	    <li><a>Class3</a></li>
+	  <ul id="dropdown" class="dropdown-menu"><br>
 	  </ul>
 	</div>
+	<div id="class_widget_display"></div>
       </div>
     </div>
   </body>

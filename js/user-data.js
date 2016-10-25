@@ -59,6 +59,16 @@ var User_data = function() {
     return result;
   }
 
+  that.update_class = function(username, class_name, new_students) {
+    var result = users[username].classes.update_class(class_name, new_students);
+    users[username].classes.sync();
+    return result;
+  }
+
+  that.students = function(username, class_name) {
+    return users[username].classes.students(class_name);
+  }
+
   that.remove_class = function(username, class_name) {
     users[username].classes.remove_class(class_name);
     users[username].classes.sync();
