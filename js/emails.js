@@ -49,14 +49,12 @@ var Emails = function() {
 			       students,
 			       callback) {
     if (index >= students.length) {
-      console.log("terminating due to index");
       callback(undefined);
       return;
     }
     mail_options.to = students[index];
     transporter.sendMail(mail_options, function(error, info){
       if(error){
-	console.log("calling callback with error", error);
 	callback(error);
 	return;
       }
@@ -66,8 +64,6 @@ var Emails = function() {
   }
 
   that.send = function(email_addr, password, to_send, students, callback) {
-    console.log("sending email with username", email_addr,
-		"and password", password);
     var transporter = nodemailer.createTransport(smtp_transport({
       service: "gmail",
       auth: {

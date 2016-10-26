@@ -107,6 +107,32 @@ $(function() {
       contentType: "application/json",
     });
   }
+
+  $("#test_email").click(function() {
+    var success = function(result) {
+      if (result.success) {
+	info_text.text("sample email sent successfully");
+      } else {
+	info_text.text("sample email failed to send: " + result.error);
+      }
+    }
+    var error = function(err) {
+      info_text.text("unable to contact server");
+      console.log(err);
+    }
+    $.ajax({
+      url: "/emails/sample",
+      type: "POST",
+      dataType: "json",
+      data: JSON.stringify({
+	'email_name': email_name,
+      }),
+      success: success,
+      error: error,
+      timeout: 2000,
+      contentType: "application/json",
+    });
+  });
   load_emails();
   load_classes();
 });

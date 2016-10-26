@@ -134,6 +134,23 @@ var add_pages = function(app, user_data) {
       res.end();
     });
   });
+
+  app.post("/emails/sample", function(req, res) {
+    var username = req.session.username;
+    var email_name = req.body.email_name;
+    console.log("SAMPLE EMAIL USER", username, "EMAIL", email_name);
+    user_data.send_emails(username,
+			  email_name,
+			  [user_data.get_email_addr(username)],
+			  function(err) {
+      if (err) {
+	res.json({"success": false, "error": JSON.stringify(err)})
+      } else {
+	res.json({"success": true});
+      }
+      res.end();
+    });
+  });
 }
 
 module.exports = add_pages

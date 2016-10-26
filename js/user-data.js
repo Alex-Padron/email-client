@@ -70,6 +70,10 @@ var User_data = function() {
     users[username].personal_info.sync();
   }
 
+  that.get_email_addr = function(username) {
+    return users[username].personal_info.get_email_address();
+  }
+
   that.class_list = function(username) {
     return users[username].classes.class_list();
   }
