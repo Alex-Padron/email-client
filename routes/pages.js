@@ -1,19 +1,19 @@
 var add_pages = function(app, user_data) {
 
   app.get("/", function(req, res) {
-    res.render("class_display.html");
+    res.render("send-emails.html");
   });
 
   app.get("/edit_classes", function(req, res) {
-    res.render("edit_classes.html");
+    res.render("edit-classes.html");
   });
 
   app.get("/edit_emails", function(req, res) {
-    res.render("edit_emails.html");
+    res.render("edit-emails.html");
   });
 
   app.get("/edit_account_info", function(req, res) {
-    res.render("edit_account_info.html");
+    res.render("edit-account-info.html");
   });
 
   app.get("/personal_info/email", function(req, res) {

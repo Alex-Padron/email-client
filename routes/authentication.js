@@ -35,7 +35,7 @@ var add_authentication = function(app, user_data) {
   });
 
   app.get("/new_account", function(req, res) {
-    res.render("new_account.html");
+    res.render("new-account.html");
   });
 
   app.get("/login", function(req, res) {

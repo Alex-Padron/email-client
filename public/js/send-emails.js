@@ -22,7 +22,6 @@ $(function() {
       info_text.text("no students selected");
       return;
     }
-    console.log("sending emails to students", students);
     var success = function(result) {
       if (result.success) {
 	info_text.text("emails sent successfully");
