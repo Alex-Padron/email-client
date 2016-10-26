@@ -25,15 +25,12 @@ var class_display_widget = function(dom_container,
     return fs;
   }
 
-  var download_button = $("<a>Download Current Class File</a>");
-  download_button.attr("href", "data:text/plain;charset=utf-8," +
-			       encodeURIComponent(to_file_string(students)));
-  download_button.attr("download", class_name + "-students.txt");
-  var download_container = $("<div style='margin-bottom: 10px'></div>");
-  download_button.appendTo(download_container);
   header.appendTo(dom_container);
   upload_button.appendTo(dom_container);
-  download_container.appendTo(dom_container);
+  var download = download_button("Download Current Class File",
+				 encodeURIComponent(to_file_string(students)),
+				 class_name + "-students.txt");
+  download.appendTo(dom_container);
   info_text.appendTo(dom_container);
 
   var submit_delete_to_server = function() {

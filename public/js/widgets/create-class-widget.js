@@ -59,14 +59,10 @@ name already exists");
 
   student_list_label.appendTo(dom_container);
 
-  var download_button = $("<a>Download Sample Students File</a>");
-  download_button.attr("href", "data:text/plain;charset=utf-8," +
-		       encodeURIComponent(sample_students_file));
-  download_button.attr("download", "sample-students.txt");
-  var download_container = $("<div style='margin-bottom: 10px'></div>");
-  download_button.appendTo(download_container);
-  download_container.appendTo(dom_container);
-
+  var download = download_button("Download Sample Students File",
+				 encodeURIComponent(sample_students_file),
+				"sample-students.txt");
+  download.appendTo(dom_container);
   var info_text_dom = $("<p id='create_class_info_text'></p>");
   info_text_dom.appendTo(dom_container);
 

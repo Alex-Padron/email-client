@@ -60,9 +60,7 @@ var User_data = function() {
 
   // perform initial load on startup
   db_init();
-//  persister.remove({}, function() {
-    db_load();
-//  });
+  db_load();
 
   // return true if new user created successfully otherwise false if present
   that.add_user = function(username, password, email_address, email_password) {
