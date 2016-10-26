@@ -1,5 +1,5 @@
 var create_class_widget = function(dom_container, success_hook, cancel_hook) {
-  var sample_students_file = "Alex alex_p@mit.edu \nScott scott_p@mit.edu";
+  var sample_students_file = "Alex P, alex_p@mit.edu \r\nScott P, scott_p@mit.edu";
 
   var name_label = $("<label>Name:</label>");
   var new_name = $("<input type='text' class='form-control'></input>");

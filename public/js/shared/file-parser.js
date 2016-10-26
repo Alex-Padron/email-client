@@ -7,11 +7,11 @@ var create_file_input = function(id, info_text_id, file_callback) {
     var lines = text.split("\n");
     if (lines.length == 0) return false;
     for (var i = 0; i < lines.length; i++) {
-      var line = $.trim(lines[i]).split(" ");
+      var line = lines[i].split(",");
       if (line.length == 2) {
 	parsed_students.push({
-	  'name': line[0],
-	  'email': line[1],
+	  'name': $.trim(line[0]),
+	  'email': $.trim(line[1]),
 	});
       } else if (line.length != 1 || line[0] !== "") {
 	// handle extra empty lines in the file
