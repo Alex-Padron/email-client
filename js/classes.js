@@ -1,13 +1,11 @@
-var nodemailer = require('nodemailer')
-
 var Classes = function() {
   var that = Object.create(null);
   var students = {}
+  var persister = undefined;
 
   var init_class = function(class_name) {
     students[class_name] = []
   }
-  that.sync = function() {}
 
   that.add_student = function(class_name, student_name, email_addr) {
     if (!students[class_name]) init_class(class_name);
@@ -75,6 +73,13 @@ var Classes = function() {
     return students[class_name].slice();
   }
 
+  that.get_json_string = function() {
+    return JSON.stringify(students);
+  }
+
+  that.parse_json_string = function(str) {
+    students = JSON.parse(str);
+  }
   Object.freeze(that);
   return that;
 }

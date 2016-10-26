@@ -1,10 +1,68 @@
+var mongoose = require("mongoose");
+
 var Personal_info = require("./personal_info.js");
 var Classes = require("./classes.js");
 var Emails = require("./emails.js");
+var Persister = require("./persist.js");
 
 var User_data = function() {
   var that = Object.create(null);
   var users = {}
+  var persister = undefined;
+
+  // store db of client personal info
+  var db_init = function() {
+    var schema = mongoose.Schema({
+      "username": String,
+      "password": String,
+      "email_address": String,
+      "email_password": String,
+      "classes": String,
+      "emails": String
+    });
+    var model = mongoose.model("users", schema);
+    persister = Persister(model);
+  }
+
+  var db_save = function(username) {
+    persister.remove({"username": username}, function() {
+      var user = users[username];
+      persister.persist({
+	"username": username,
+	"password": user.personal_info.get_password(),
+	"email_address": user.personal_info.get_email_address(),
+	"email_password": user.personal_info.get_email_password(),
+	"classes": user.classes.get_json_string(),
+	"emails": user.emails.get_json_string()
+      }, function() {
+	console.log("SAVED STATE, USER", username);
+      });
+    });
+  }
+
+  var db_load = function() {
+    persister.load(function(err, loaded_users) {
+      loaded_users.forEach(function(user) {
+	console.log("LOADED RECORD OF USER", user.username);
+	users[user.username] = {
+	  "personal_info": Personal_info(user.password,
+					 user.email_address,
+					 user.email_password),
+	  "classes": Classes(),
+	  "emails": Emails()
+	};
+	users[user.username].classes.parse_json_string(user.classes);
+	users[user.username].emails.parse_json_string(user.emails);
+      });
+      console.log("LOADED USER STATE");
+    });
+  }
+
+  // perform initial load on startup
+  db_init();
+//  persister.remove({}, function() {
+    db_load();
+//  });
 
   // return true if new user created successfully otherwise false if present
   that.add_user = function(username, password, email_address, email_password) {
@@ -14,26 +72,25 @@ var User_data = function() {
       'classes': Classes(),
       'emails': Emails(),
     };
-    users[username].personal_info.sync();
-    users[username].classes.sync();
-    users[username].emails.sync();
+    db_save(username);
     return true;
   }
 
   that.add_email_to_send = function(username, email_name, subject, text) {
     var result = users[username].emails.add(email_name, subject, text);
-    users[username].emails.sync();
+    db_save(username);
     return result;
   }
 
   that.update_email_to_send = function(username, email_name, subject, text) {
     var result = users[username].emails.update(email_name, subject, text);
-    users[username].emails.sync();
+    db_save(username);
     return result;
   }
 
   that.remove_email_to_send = function(username, email_name) {
     users[username].emails.remove(email_name);
+    db_save(username);
   }
 
   that.get_email_to_send = function(username, email_name) {
@@ -49,6 +106,7 @@ var User_data = function() {
   }
 
   that.password = function(username) {
+    if (!users[username]) return undefined;
     return users[username].personal_info.get_password();
   }
 
@@ -67,7 +125,7 @@ var User_data = function() {
 
   that.set_email_addr = function(username, new_address, new_password) {
     users[username].personal_info.update_email(new_address, new_password);
-    users[username].personal_info.sync();
+    db_save(username);
   }
 
   that.get_email_addr = function(username) {
@@ -80,13 +138,13 @@ var User_data = function() {
 
   that.add_class = function(username, class_name, students) {
     var result = users[username].classes.add_class(class_name, students);
-    users[username].classes.sync();
+    db_save(username);
     return result;
   }
 
   that.update_class = function(username, class_name, new_students) {
     var result = users[username].classes.update_class(class_name, new_students);
-    users[username].classes.sync();
+    db_save(username);
     return result;
   }
 
@@ -96,7 +154,7 @@ var User_data = function() {
 
   that.remove_class = function(username, class_name) {
     users[username].classes.remove_class(class_name);
-    users[username].classes.sync();
+    db_save(username);
   }
 
   that.add_student = function(username,
@@ -106,6 +164,7 @@ var User_data = function() {
     users[username].classes.add_student(class_name,
 					student_name,
 					student_email);
+    db_save(username);
   }
 
   Object.freeze(that);

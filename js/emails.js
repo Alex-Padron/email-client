@@ -4,8 +4,7 @@ var smtp_transport = require('nodemailer-smtp-transport');
 var Emails = function() {
   var that = Object.create(null);
   var emails = {}
-
-  that.sync = function() {}
+  var persister = undefined;
 
   // return whether the email was added successfully
   that.add = function(name, subject, text) {
@@ -41,6 +40,14 @@ var Emails = function() {
 
   that.remove = function(email_name) {
     if (emails[email_name]) delete emails[email_name];
+  }
+
+  that.get_json_string = function() {
+    return JSON.stringify(emails);
+  }
+
+  that.parse_json_string = function(str) {
+    emails = JSON.parse(str);
   }
 
   var callback_send = function(transporter,
