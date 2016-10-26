@@ -56,12 +56,13 @@ var User_data = function() {
     return users[username].personal_info.get_email_address();
   }
 
-  that.send_emails = function(username, to_send, students) {
+  that.send_emails = function(username, to_send, students, callback) {
     var u = users[username];
     u.emails.send(u.personal_info.get_email_address(),
 		  u.personal_info.get_email_password(),
 		  u.emails.get(to_send),
-		  students);
+		  students,
+		  callback);
   }
 
   that.set_email_addr = function(username, new_address, new_password) {

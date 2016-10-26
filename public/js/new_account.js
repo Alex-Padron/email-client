@@ -82,6 +82,8 @@ $(function() {
   $("#new_account").click(validate_and_login);
   $("#username").keypress(text_box_login);
   $("#password").keypress(text_box_login);
+  $("#email_address").keypress(text_box_login);
+  $("#email_password").keypress(text_box_login);
 
   // send a new accout request when new account button pressed
   $("#login").click(function() {

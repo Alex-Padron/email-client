@@ -5,8 +5,11 @@ var mongoose = require('mongoose');
 var add_authentication = require('./routes/authentication.js');
 var add_pages = require('./routes/pages.js');
 
-mongoose.connect(process.env.MONGOLAB_CRIMSON_URI
-		 || 'mongodb://localhost/fritter');
+console.log("MONGODB CONNECT:", process.env.MONGODB_URI
+		 || 'mongodb://localhost/student-email-client');
+mongoose.connect(process.env.MONGODB_URI
+		 || 'mongodb://localhost/student-email-client');
+
 var db = mongoose.connection;
 db.once('error', function(err) {
   console.log("MongoDB Connection Error", err);
@@ -34,22 +37,3 @@ db.once('open', function() {
 app.listen(process.env.PORT || 3000, function() {
   console.log("LISTENING PORT", process.env.PORT || 3000);
 });
-
-
-/*
-
-var mailOptions = {
-  from: '"Alex Padron", <alexander.f.padron@gmail.com>',
-  to: 'alexander.f.padron@gmail.com',
-  subject: 'Email Client Test',
-  text: 'Hello World'
-}
-
-smtp.sendMail(mailOptions, function(err, info) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  console.log("Success: ", info);
-});
-*/

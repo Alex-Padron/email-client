@@ -1,8 +1,9 @@
 var send_emails_widget = function(dom_container, students, send_emails) {
+  dom_container.empty();
   students = students.map(function(student) {
-    var btn = $("<button type='button' class='btn btn-default'>Name: "
-		+ student.name + " Email: " + student.email
-		+ "</button>");
+    var btn = $("<button type='button' class='btn btn-default'>"
+		+ student.name + " : " + student.email
+		+ "</button><br>");
     btn.css("color", "green");
     btn.attr("student_email", student.email);
     btn.attr("sending", false);
@@ -20,6 +21,7 @@ var send_emails_widget = function(dom_container, students, send_emails) {
     btn.appendTo(dom_container);
     return btn;
   });
+
   var send_button = $("<button type='button' class='btn btn-primary'>Send Emails</button>");
   send_button.click(function() {
     var to_send = students.filter(function(student) {

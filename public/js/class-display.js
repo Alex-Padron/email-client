@@ -1,8 +1,9 @@
 $(function() {
   var info_text = $("#info_text");
   $('.dropdown-toggle').dropdown();
-  var email_name;
   var info_text = $("#info_text");
+  var email_name; // name of the selected email
+  var class_students; // all students in the selected class
 
   var save_email = function(new_email_name) {
     console.log("using email name", new_email_name);
@@ -24,7 +25,7 @@ $(function() {
       if (result.success) {
 	info_text.text("emails sent successfully");
       } else {
-	info_text.text("email failed to send: " + result.error_s);
+	info_text.text("email failed to send: " + result.error);
       }
     }
     var error = function(err) {
@@ -44,15 +45,16 @@ $(function() {
       timeout: 2000,
       contentType: "application/json",
     });
-
+    // reinstall the widget after sending to prevent double clicking
+    send_emails_widget($("#to_send"), class_students, send_emails);
   }
 
   var render_class = function(class_name) {
     console.log("using class_name", class_name);
     $("#class_button").text(class_name);
-    var success = function(students) {
-      console.log("got students", students);
-      send_emails_widget($("#to_send"), students, send_emails);
+    var success = function(new_students) {
+      class_students = new_students;
+      send_emails_widget($("#to_send"), class_students, send_emails);
     }
     var error = function(err) {
       info_text.text(err);

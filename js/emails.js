@@ -43,7 +43,29 @@ var Emails = function() {
     if (emails[email_name]) delete emails[email_name];
   }
 
-  that.send = function(email_addr, password, to_send, students) {
+  var callback_send = function(transporter,
+			       mail_options,
+			       index,
+			       students,
+			       callback) {
+    if (index >= students.length) {
+      console.log("terminating due to index");
+      callback(undefined);
+      return;
+    }
+    mail_options.to = students[index];
+    transporter.sendMail(mail_options, function(error, info){
+      if(error){
+	console.log("calling callback with error", error);
+	callback(error);
+	return;
+      }
+      console.log('Message sent: ' + info.response);
+      callback_send(transporter, mail_options, index + 1, students, callback);
+    });
+  }
+
+  that.send = function(email_addr, password, to_send, students, callback) {
     console.log("sending email with username", email_addr,
 		"and password", password);
     var transporter = nodemailer.createTransport(smtp_transport({
@@ -54,21 +76,13 @@ var Emails = function() {
       }
     }));
 
-    var mailOptions = {
-      from: "email_addr",
+    var mail_options = {
+      from: email_addr,
       to: "",
       subject: to_send.subject,
       text: to_send.text,
     };
-    students.forEach(function(student_email) {
-      mailOptions.to = student_email;
-      transporter.sendMail(mailOptions, function(error, info){
-	if(error){
-          return console.log(error);
-	}
-	console.log('Message sent: ' + info.response);
-      });
-    });
+    callback_send(transporter, mail_options, 0, students, callback);
   }
 
   // add some default texts

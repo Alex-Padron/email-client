@@ -125,9 +125,14 @@ var add_pages = function(app, user_data) {
     var students = JSON.parse(req.body.students);
     console.log("SEND EMAIL USER", username, "EMAIL", email_name,
 		"STUDENTS", students);
-    user_data.send_emails(username, email_name, students);
-    res.json({"success": true});
-    res.end();
+    user_data.send_emails(username, email_name, students, function(err) {
+      if (err) {
+	res.json({"success": false, "error": JSON.stringify(err)})
+      } else {
+	res.json({"success": true});
+      }
+      res.end();
+    });
   });
 }
 
