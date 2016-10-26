@@ -20,9 +20,28 @@ var User_data = function() {
     return true;
   }
 
-  that.update_email_to_send = function(username, email_name, subject, text) {
-    users[username].emails.set(email_name, subject, text);
+  that.add_email_to_send = function(username, email_name, subject, text) {
+    var result = users[username].emails.add(email_name, subject, text);
     users[username].emails.sync();
+    return result;
+  }
+
+  that.update_email_to_send = function(username, email_name, subject, text) {
+    var result = users[username].emails.update(email_name, subject, text);
+    users[username].emails.sync();
+    return result;
+  }
+
+  that.remove_email_to_send = function(username, email_name) {
+    users[username].emails.remove(email_name);
+  }
+
+  that.get_email_to_send = function(username, email_name) {
+    return users[username].emails.get(email_name);
+  }
+
+  that.get_emails_list = function(username) {
+    return users[username].emails.get_names();
   }
 
   that.contains_user = function(username) {
@@ -37,11 +56,12 @@ var User_data = function() {
     return users[username].personal_info.get_email_address();
   }
 
-  that.send_emails = function(username, to_send, class_name, students) {
+  that.send_emails = function(username, to_send, students) {
     var u = users[username];
-    u.emails.send(u.personal_info.email_addr(),
-		  u.get_email(to_send),
-		  u.classes.extract(class_name, students));
+    u.emails.send(u.personal_info.get_email_address(),
+		  u.personal_info.get_email_password(),
+		  u.emails.get(to_send),
+		  students);
   }
 
   that.set_email_addr = function(username, new_address, new_password) {

@@ -70,6 +70,65 @@ var add_pages = function(app, user_data) {
     res.json(user_data.students(username, req.params.class_name));
     res.end();
   });
+
+  app.post("/emails", function(req, res) {
+    var username = req.session.username;
+    var email_name = req.body.email_name;
+    var subject = req.body.subject;
+    var text = req.body.text;
+    console.log("NEW EMAIL NAME", email_name,
+		"SUBJECT", subject,
+		"USER", username);
+    var success =
+      user_data.add_email_to_send(username, email_name, subject, text);
+    res.json({'success': success});
+    res.end();
+  });
+
+  app.put("/emails", function(req, res) {
+    var username = req.session.username;
+    var email_name = req.body.email_name;
+    var subject = req.body.subject;
+    var text = req.body.text;
+    console.log("UPDATE EMAIL NAME", email_name,
+		"SUBJECT", subject,
+		"USER", username);
+    var success =
+      user_data.update_email_to_send(username, email_name, subject, text);
+    res.json({'success': success});
+    res.end();
+  });
+
+  app.delete("/emails/:email_name", function(req, res) {
+    var username = req.session.username;
+    var email_name = req.params.email_name;
+    user_data.remove_email_to_send(username, email_name);
+    res.end();
+  });
+
+  app.get("/emails", function(req, res) {
+    var username = req.session.username;
+    res.json(user_data.get_emails_list(username));
+    res.end();
+  });
+
+  app.get("/emails/single/:email_name", function(req, res) {
+    var username = req.session.username;
+    var email_name = req.params.email_name;
+    res.json(JSON.stringify(user_data.get_email_to_send(username, email_name)));
+    res.end();
+  });
+
+  app.post("/emails/send", function(req, res) {
+    var username = req.session.username;
+    var email_name = req.body.email_name;
+    var students = JSON.parse(req.body.students);
+    console.log("SEND EMAIL USER", username, "EMAIL", email_name,
+		"STUDENTS", students);
+    user_data.send_emails(username, email_name, students);
+    res.json({"success": true});
+    res.end();
+  });
 }
 
 module.exports = add_pages

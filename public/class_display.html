@@ -15,15 +15,39 @@
         });
       });
     </script>
+    <script src="./js/send-emails-widget.js"></script>
+    <script src="./js/dropdown_widget.js"></script>
+    <script src="./js/class-display.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   </head>
   <body>
-    <div class="container">
-      <div id="header"></div>
-      <div class="container" style="margin-bottom: 10px">
-	<input id="search_bar" type="text" placeholder="Search"></input>
+  <div class="container">
+    <div id="header"></div>
+    <div class="container" style="margin-bottom: 10px">
+      <div class="dropdown" style="margin-bottom: 20px">
+	<button id="email_button" class="btn btn-default dropdown-toggle"
+		type="button" data-toggle="dropdown">
+	  Select an Email
+	  <span class="caret"></span>
+	</button>
+	<ul id="email_dropdown" class="dropdown-menu"><br>
+	</ul>
       </div>
-      <div id="posts"></div>
+      <div class="dropdown" style="margin-bottom: 20px">
+	<button id="class_button" class="btn btn-default dropdown-toggle"
+		type="button" data-toggle="dropdown">
+	  Select a Class
+	  <span class="caret"></span>
+	</button>
+	<ul id="class_dropdown" class="dropdown-menu"><br>
+	</ul>
+      </div>
+      <button id="test_email" type="button" style="margin-bottom: 20px"
+	      class="btn btn-primary">Send Test Email to Self</button>
+      <p id="info_text"></p>
+      <div class="btn-group-vertical">
+	<div id="to_send"></div>
+      </div>
     </div>
   </body>
 </html>

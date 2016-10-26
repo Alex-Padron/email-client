@@ -25,9 +25,9 @@ $(document).ready(function () {
 
   var load_class_dropdown = function() {
     var success = function(classes) {
-      class_dropdown_widget_install($("#dropdown"),
-				    classes,
-				    load_class_display);
+      dropdown_widget_install($("#dropdown"),
+			      classes,
+			      load_class_display);
     }
     var error = function(err) {
       console.log(err);
