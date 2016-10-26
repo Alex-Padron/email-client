@@ -25,7 +25,7 @@
     "nodemailer": "^2.6.4",
     "nodemailer-smtp-transport": "^2.7.2",
     "smtp": "^0.1.4"
-  }
+  },
   "scripts": {
     "start": "node app.js"
   }
