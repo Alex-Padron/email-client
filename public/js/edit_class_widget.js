@@ -12,7 +12,6 @@ var class_display_widget = function(dom_container,
   var upload_button =
     create_file_input("new_student_files", "edit_class_info_text",
 		      function(new_parsed_students) {
-			console.log("uploaded students", new_parsed_students);
 			parsed_students = new_parsed_students
 		      });
 
@@ -30,12 +29,12 @@ var class_display_widget = function(dom_container,
   download_button.attr("href", "data:text/plain;charset=utf-8," +
 			       encodeURIComponent(to_file_string(students)));
   download_button.attr("download", class_name + "-students.txt");
-  var download_container = $("<div style='margin-bottom: 20px'></div>");
+  var download_container = $("<div style='margin-bottom: 10px'></div>");
   download_button.appendTo(download_container);
   header.appendTo(dom_container);
   upload_button.appendTo(dom_container);
-  info_text.appendTo(dom_container);
   download_container.appendTo(dom_container);
+  info_text.appendTo(dom_container);
 
   var submit_delete_to_server = function() {
     var success = function() {

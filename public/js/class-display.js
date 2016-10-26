@@ -6,8 +6,10 @@ $(function() {
   var class_students; // all students in the selected class
 
   var save_email = function(new_email_name) {
-    console.log("using email name", new_email_name);
-    $("#email_button").text(new_email_name);
+    var email_button = $("#email_button");
+    email_button.text(new_email_name + " ");
+    var span = $("<span class='caret'></span>");
+    span.appendTo(email_button);
     email_name = new_email_name;
   }
 
@@ -50,8 +52,10 @@ $(function() {
   }
 
   var render_class = function(class_name) {
-    console.log("using class_name", class_name);
-    $("#class_button").text(class_name);
+    var class_button = $("#class_button");
+    class_button.text(class_name + " ");
+    var span = $("<span class='caret'></span>");
+    span.appendTo(class_button);
     var success = function(new_students) {
       class_students = new_students;
       send_emails_widget($("#to_send"), class_students, send_emails);
@@ -72,7 +76,6 @@ $(function() {
 
   var load_emails = function() {
     var success = function(emails) {
-      console.log("loaded emails", emails, "from server");
       dropdown_widget_install($("#email_dropdown"), emails, save_email);
     }
     var error = function(err) {
@@ -91,7 +94,6 @@ $(function() {
 
   var load_classes = function() {
     var success = function(classes) {
-      console.log("got classes from server", classes);
       dropdown_widget_install($("#class_dropdown"), classes, render_class);
     }
     var error = function(err) {
