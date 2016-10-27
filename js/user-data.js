@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var Personal_info = require("./personal_info.js");
+var Personal_info = require("./personal-info.js");
 var Classes = require("./classes.js");
 var Emails = require("./emails.js");
 var Persister = require("./persist.js");
@@ -40,19 +40,21 @@ var User_data = function() {
     });
   }
 
+  var create_user = function(username, password, email_addr, email_pwd) {
+    users[username] = {
+      "personal_info": Personal_info(password, email_addr, email_pwd),
+      "classes": Classes(),
+      "emails": Emails()
+    }
+  }
+
   var db_load = function() {
     persister.load(function(err, loaded_users) {
-      loaded_users.forEach(function(user) {
-	console.log("LOADED RECORD OF USER", user.username);
-	users[user.username] = {
-	  "personal_info": Personal_info(user.password,
-					 user.email_address,
-					 user.email_password),
-	  "classes": Classes(),
-	  "emails": Emails()
-	};
-	users[user.username].classes.parse_json_string(user.classes);
-	users[user.username].emails.parse_json_string(user.emails);
+      loaded_users.forEach(function(u) {
+	console.log("LOADED RECORD OF USER", u.username);
+	create_user(u.username, u.password, u.email_address, u.email_password);
+	users[u.username].classes.parse_json_string(u.classes);
+	users[u.username].emails.parse_json_string(u.emails);
       });
       console.log("LOADED USER STATE");
     });
@@ -63,13 +65,9 @@ var User_data = function() {
   db_load();
 
   // return true if new user created successfully otherwise false if present
-  that.add_user = function(username, password, email_address, email_password) {
+  that.add_user = function(username, password, email_addr, email_pwd) {
     if (users[username]) return false;
-    users[username] = {
-      'personal_info': Personal_info(password, email_address, email_password),
-      'classes': Classes(),
-      'emails': Emails(),
-    };
+    create_user(username, password, email_addr, email_pwd);
     db_save(username);
     return true;
   }

@@ -2,6 +2,7 @@ var express = require('express');
 var body_parser = require('body-parser');
 var mongoose = require('mongoose');
 
+var User_data = require("./js/user-data.js");
 var add_authentication = require('./routes/authentication.js');
 var add_pages = require('./routes/pages.js');
 
@@ -26,10 +27,8 @@ app.set('view engine', 'html');
 //serve static public files
 app.use(express.static(__dirname + '/public'));
 
-
 db.once('open', function() {
-  var user_data = require("./js/user-data.js")();
-  //handle login/sessions
+  var user_data = User_data();
   add_authentication(app, user_data);
   add_pages(app, user_data);
 });
