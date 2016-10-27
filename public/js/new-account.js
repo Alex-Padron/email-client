@@ -81,6 +81,7 @@ $(function() {
 
   $("#new_account").click(validate_and_login);
   $("#username").keypress(text_box_login);
+  $("#username").focus();
   $("#password").keypress(text_box_login);
   $("#email_address").keypress(text_box_login);
   $("#email_password").keypress(text_box_login);
