@@ -120,12 +120,14 @@ var add_pages = function(app, user_data) {
   });
 
   app.post("/emails/send", function(req, res) {
+    var x = 'https://myaccount.google.com/lesssecureapps';
     var username = req.session.username;
     var email_name = req.body.email_name;
     var students = JSON.parse(req.body.students);
+    var date_string = req.body.date_string;
     console.log("SEND EMAIL USER", username, "EMAIL", email_name,
-		"STUDENTS", students);
-    user_data.send_emails(username, email_name, students, function(err) {
+		"STUDENTS", students, "DATE_STRING", date_string);
+    user_data.send_emails(username, email_name, students, date_string, function(err) {
       if (err) {
 	res.json({"success": false, "error": JSON.stringify(err)})
       } else {

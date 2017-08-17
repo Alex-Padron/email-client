@@ -29,7 +29,8 @@ var send_emails_widget = function(dom_container, students, send_emails) {
     }).map(function(student) {
       return student.attr("student_email");
     })
-    send_emails(to_send);
+    var date_string = $("#date_string")[0].value;
+    send_emails(to_send, date_string);
   });
   send_button.appendTo(dom_container);
 }

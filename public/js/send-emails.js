@@ -13,7 +13,7 @@ $(function() {
     email_name = new_email_name;
   }
 
-  var send_emails = function(students) {
+  var send_emails = function(students, date_string) {
     if (!email_name) {
       info_text.text("must select an email to send");
       return;
@@ -39,7 +39,8 @@ $(function() {
       dataType: "json",
       data: JSON.stringify({
 	'email_name': email_name,
-	'students': JSON.stringify(students)
+	'students': JSON.stringify(students),
+	'date_string': date_string
       }),
       success: success,
       error: error,

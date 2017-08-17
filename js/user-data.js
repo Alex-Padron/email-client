@@ -110,11 +110,13 @@ var User_data = function() {
     return users[username].personal_info.get_email_address();
   }
 
-  that.send_emails = function(username, to_send, students, callback) {
+  that.send_emails = function(username, to_send, students, date_string, callback) {
     var u = users[username];
+    var email = u.emails.get(to_send);
+    email.text = email.text.replace("{}", date_string);
     u.emails.send(u.personal_info.get_email_address(),
 		  u.personal_info.get_email_password(),
-		  u.emails.get(to_send),
+		  email,
 		  students,
 		  callback);
   }

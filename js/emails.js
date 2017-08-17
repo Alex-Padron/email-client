@@ -31,7 +31,7 @@ var Emails = function() {
   }
 
   that.get = function(email_name) {
-    return emails[email_name];
+    return JSON.parse(JSON.stringify(emails[email_name]));
   }
 
   that.get_names = function() {
@@ -91,11 +91,11 @@ var Emails = function() {
   // add some default texts
   emails["no homework"] = {
     subject: "Classroom Alert: No Homework",
-    text: "Your child did not do his homework today"
+    text: "Your child did not do his homework {}"
   };
   emails["not prepared"] = {
     subject: "Classroom Alert: Not Prepared",
-    text: "Your child was not prepared for class today"
+    text: "Your child was not prepared for class {}"
   };
 
   Object.freeze(that);
