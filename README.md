@@ -9,7 +9,10 @@ users to extract your password using this website, even if they are logged in
 as you. However, by submitting your username and password you are trusting
 Heroku to keep it secure.
 
-TODO:
+Addtionally, in order to allow Heroku to send emails on your behalf, you have
+to enable less secure apps at `https://myaccount.google.com/lesssecureapps`
+
+## TODO:
 fix login to not lose username/password
 fix class dropdown if no classes
 button spacing
