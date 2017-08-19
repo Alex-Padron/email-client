@@ -13,8 +13,7 @@ var create_file_input = function(id, info_text_id, file_callback) {
 	  'name': $.trim(line[0]),
 	  'email': $.trim(line[1]),
 	});
-      } else if (line.length != 1 || line[0] !== "") {
-	// handle extra empty lines in the file
+      } else if (line.length != 1 || $.trim(line[0]) !== "") {
 	parsed_students = [];
 	return false;
       }
