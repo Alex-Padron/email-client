@@ -20,7 +20,7 @@ var class_display_widget = function(dom_container,
   var to_file_string = function(students) {
     fs = "";
     for (var i = 0; i < students.length; i++) {
-      fs += students[i].name + " " + students[i].email + "\n";
+      fs += students[i].name + ", " + students[i].email + "\r\n";
     }
     return fs;
   }
