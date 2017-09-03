@@ -120,7 +120,6 @@ var add_pages = function(app, user_data) {
   });
 
   app.post("/emails/send", function(req, res) {
-    var x = 'https://myaccount.google.com/lesssecureapps';
     var username = req.session.username;
     var email_name = req.body.email_name;
     var students = JSON.parse(req.body.students);

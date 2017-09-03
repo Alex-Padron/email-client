@@ -30,7 +30,7 @@ $(function() {
       }
     }
     var error = function(err) {
-      info_text.text("unable to contact server");
+      info_text.text("Connection error: check email to see if sent");
       console.log(err);
     }
     $.ajax({
@@ -44,7 +44,7 @@ $(function() {
       }),
       success: success,
       error: error,
-      timeout: 2000,
+      timeout: 5000,
       contentType: "application/json",
     });
     // reinstall the widget after sending to prevent double clicking
