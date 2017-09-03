@@ -59,7 +59,10 @@ var Emails = function() {
       callback(undefined);
       return;
     }
-    mail_options.to = students[index];
+    var student = students[index];
+    mail_options.to = student["email"];
+    mail_options.subject = mail_options.subject.replace("<>", student["name"]);
+    mail_options.text = mail_options.text.replace("<>", student["name"]);
     transporter.sendMail(mail_options, function(error, info){
       if(error){
 	callback(error);

@@ -139,10 +139,16 @@ var add_pages = function(app, user_data) {
   app.post("/emails/sample", function(req, res) {
     var username = req.session.username;
     var email_name = req.body.email_name;
+    var date_string = req.body.date_string;
     console.log("SAMPLE EMAIL USER", username, "EMAIL", email_name);
+    var students = [{
+      "email": user_data.get_email_addr(username),
+      "name": username
+    }];
     user_data.send_emails(username,
 			  email_name,
-			  [user_data.get_email_addr(username)],
+			  students,
+			  date_string,
 			  function(err) {
       if (err) {
 	res.json({"success": false, "error": JSON.stringify(err)})

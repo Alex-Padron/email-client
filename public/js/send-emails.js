@@ -122,12 +122,14 @@ $(function() {
       info_text.text("unable to contact server");
       console.log(err);
     }
+    var date_string = $("#date_string")[0].value;
     $.ajax({
       url: "/emails/sample",
       type: "POST",
       dataType: "json",
       data: JSON.stringify({
 	'email_name': email_name,
+	'date_string': date_string
       }),
       success: success,
       error: error,

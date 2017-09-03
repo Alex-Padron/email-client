@@ -6,6 +6,7 @@ var send_emails_widget = function(dom_container, students, send_emails) {
 		+ "</button><br>");
     btn.css("color", "green");
     btn.attr("student_email", student.email);
+    btn.attr("student_name", student.name);
     btn.attr("sending", false);
     btn.click(function() {
       // use string comparison here since attributes are always
@@ -27,8 +28,11 @@ var send_emails_widget = function(dom_container, students, send_emails) {
     var to_send = students.filter(function(student) {
       return student.attr("sending") === "true";
     }).map(function(student) {
-      return student.attr("student_email");
-    })
+      return {
+	"email": student.attr("student_email"),
+	"name": student.attr("student_name")
+      };
+    });
     var date_string = $("#date_string")[0].value;
     send_emails(to_send, date_string);
   });
